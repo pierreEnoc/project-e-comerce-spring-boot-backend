@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import com.pierredev.projectjavaspringboot.dto.CategoryDTO;
 import com.pierredev.projectjavaspringboot.service.CategoryService;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping(value="/categories")
@@ -33,6 +36,13 @@ public class CategoryResource {
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<CategoryDTO> findById(@PathVariable  Long id) {
 		CategoryDTO dto = categoryService.findById(id);
+		return ResponseEntity.ok().body(dto);
+	}
+	@PostMapping
+	public ResponseEntity<CategoryDTO> insert(@RequestBody CategoryDTO dto) {
+		dto = categoryService.insert(dto);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(dto.getId()).toUri();
 		return ResponseEntity.ok().body(dto);
 	}
 
