@@ -3,9 +3,12 @@ package com.pierredev.projectjavaspringboot.service;
 import java.util.Optional;
 
 
+import com.pierredev.projectjavaspringboot.service.exceptions.DatabaseException;
 import com.pierredev.projectjavaspringboot.service.exceptions.EntityNotFoundException;
 import com.pierredev.projectjavaspringboot.service.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -57,5 +60,14 @@ public class CategoryService {
 		}
 	}
 
-	
+	@Transactional
+	public void dele(Long id) {
+		try {
+			categoryRepository.deleteById(id);
+		}catch (EmptyResultDataAccessException e) {
+			throw  new ResourceNotFoundException("Id not found " + id);
+		}catch (DataIntegrityViolationException e) {
+			throw new DatabaseException("Id not found " + id);
+		}
+	}
 }
