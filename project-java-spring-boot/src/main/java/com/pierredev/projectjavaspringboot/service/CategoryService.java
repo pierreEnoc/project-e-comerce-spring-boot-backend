@@ -3,6 +3,7 @@ package com.pierredev.projectjavaspringboot.service;
 import java.util.Optional;
 
 
+import com.pierredev.projectjavaspringboot.service.exceptions.EntityNotFoundException;
 import com.pierredev.projectjavaspringboot.service.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -44,4 +45,17 @@ public class CategoryService {
 
 		return new CategoryDTO(entity);
 	}
+	@Transactional
+	public CategoryDTO update(Long id,  CategoryDTO dto) {
+		try {
+			Category entity = categoryRepository.getOne(id);
+			entity.setName(dto.getName());
+			entity = categoryRepository.save(entity);
+			return new CategoryDTO(entity);
+		} catch (EntityNotFoundException e) {
+			throw  new ResourceNotFoundException("Id not found");
+		}
+	}
+
+	
 }
