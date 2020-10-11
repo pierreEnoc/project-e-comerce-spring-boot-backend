@@ -1,8 +1,12 @@
 package com.pierredev.projectjavaspringboot.dto;
 
+import com.pierredev.projectjavaspringboot.entities.Category;
 import com.pierredev.projectjavaspringboot.entities.Product;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public class ProductDTO {
 	
@@ -12,6 +16,8 @@ public class ProductDTO {
 	private Double price;
 	private String imgUrl;
 	private Instant date;
+
+	private List<CategoryDTO> categories = new ArrayList<>();
 	
 	public ProductDTO () {
 		
@@ -36,23 +42,33 @@ public class ProductDTO {
 		this.date = entity.getDate();
 	}
 
+	public ProductDTO(Product entity, Set<Category> categories) {
+		this(entity);
+		categories.forEach(cat -> this.categories.add(new CategoryDTO(cat)));
+	}
+
 	public Long getId() {
+
 		return id;
 	}
 
 	public void setId(Long id) {
+
 		this.id = id;
 	}
 
 	public String getName() {
+
 		return name;
 	}
 
 	public void setName(String name) {
+
 		this.name = name;
 	}
 
 	public String getDescription() {
+
 		return description;
 	}
 
@@ -61,29 +77,33 @@ public class ProductDTO {
 	}
 
 	public Double getPrice() {
+
 		return price;
 	}
 
 	public void setPrice(Double price) {
+
 		this.price = price;
 	}
 
 	public String getImgUrl() {
+
 		return imgUrl;
 	}
 
 	public void setImgUrl(String imgUrl) {
+
 		this.imgUrl = imgUrl;
 	}
 
 	public Instant getDate() {
+
 		return date;
 	}
 
 	public void setDate(Instant date) {
+
 		this.date = date;
 	}
-	
-	
 
 }

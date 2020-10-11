@@ -1,20 +1,12 @@
 package com.pierredev.projectjavaspringboot.entities;
 
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 
 
 @Entity
@@ -36,9 +28,9 @@ public class Product implements Serializable {
 	
 	@ManyToMany
 	@JoinTable(name = "tb_product_category",
-		joinColumns = @JoinColumn(name="product_id"),
-		inverseJoinColumns = @JoinColumn(name="category_id"))
-	
+		joinColumns = @JoinColumn(name = "product_id"),
+		inverseJoinColumns = @JoinColumn(name = "category_id"))
+
 	Set<Category> categories = new HashSet<>();
 	
 	public Product() {
